@@ -9,12 +9,24 @@ section .text
     global hello
 
 hello:
+    ;prologue
     push rbp
+    push rbx
+    push rsi
+    push rdi
     mov rbp, rsp
-    mov rdi, fmtstr     ; first argument for printf
-    mov rsi, msg        ; second argument for printf
-    mov rax, 0          ; no xmm register involved
+    and rsp, -16
+
+    mov rcx, fmtstr     ; first argument for printf
+    mov rdx, msg        ; second argument for printf
+
     call printf             ; call the function
+    mov rax, 0
+
+    ;epilogue
     mov rsp, rbp
+    pop rdi
+    pop rsi
+    pop rbx
     pop rbp
     ret

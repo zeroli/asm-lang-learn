@@ -13,9 +13,23 @@
     10                                  
     11                                  hello:
     12 00000000 55                          push rbp
-    13 00000001 4889E5                      mov rbp, rsp
-    14 00000004 48B8-                       mov rax, msg        ; second argument for printf
-    14 00000006 [0000000000000000] 
-    15 0000000E 4889EC                      mov rsp, rbp
-    16 00000011 5D                          pop rbp
-    17 00000012 C3                          ret
+    13 00000001 53                          push rbx
+    14 00000002 56                          push rsi
+    15 00000003 57                          push rdi
+    16 00000004 4889E5                      mov rbp, rsp
+    17 00000007 4883E4F0                    and rsp, -16
+    18                                  
+    19 0000000B 48B9-                       mov rcx, fmtstr     ; first argument for printf
+    19 0000000D [0D00000000000000] 
+    20 00000015 48BA-                       mov rdx, msg        ; second argument for printf
+    20 00000017 [0000000000000000] 
+    21                                  
+    22 0000001F E8(00000000)                call printf             ; call the function
+    23 00000024 B800000000                  mov rax, 0
+    24                                  
+    25 00000029 4889EC                      mov rsp, rbp
+    26 0000002C 5F                          pop rdi
+    27 0000002D 5E                          pop rsi
+    28 0000002E 5B                          pop rbx
+    29 0000002F 5D                          pop rbp
+    30 00000030 C3                          ret

@@ -2,7 +2,7 @@
 
 int main()
 {
-    printf("hello main\n");
+    puts("hello main");
     extern void hello();
     hello();
 }
